@@ -1,0 +1,119 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjt2gmdout667"]
+
+[ext_resource type="Texture2D" uid="uid://bbiyrvjqv56nk" path="res://Assets/sprites/slime_green.png" id="1_1f0kj"]
+[ext_resource type="Script" uid="uid://dml68bdkg400d" path="res://Scripts/Enemy.cs" id="1_afpow"]
+[ext_resource type="Script" uid="uid://dlmshvwde0tdd" path="res://Scripts/HealthBar.cs" id="2_afpow"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_287tu"]
+atlas = ExtResource("1_1f0kj")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0830c"]
+atlas = ExtResource("1_1f0kj")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghaa6"]
+atlas = ExtResource("1_1f0kj")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dp5w"]
+atlas = ExtResource("1_1f0kj")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_auwsv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_287tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0830c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghaa6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dp5w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8uf12"]
+size = Vector2(12, 13)
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+input_pickable = true
+script = ExtResource("1_afpow")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_auwsv")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_8uf12")
+
+[node name="HealthBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_top = -40.0
+offset_right = 25.0
+offset_bottom = -32.0
+grow_horizontal = 2
+script = ExtResource("2_afpow")
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="HealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NoteLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -71.0
+offset_right = 20.0
+offset_bottom = -37.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "C"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectionIndicator" type="ColorRect" parent="."]
+visible = false
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+mouse_filter = 2
+color = Color(1, 1, 0, 0.3)
